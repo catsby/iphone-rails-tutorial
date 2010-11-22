@@ -47,7 +47,7 @@
         [json release];
         
         for (NSDictionary *dictionary in results) {
-            Goal *goal = [[Goal alloc] initWithDictionary:dictionary];
+			Goal *goal = [[Goal alloc] initWithDictionary:[dictionary valueForKey:@"goal"]];
             [goals addObject:goal];
             [goal release];
         }

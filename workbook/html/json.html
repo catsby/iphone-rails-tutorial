@@ -116,7 +116,7 @@ NSArray *results = [json objectWithString:aJsonString error:&amp;error];
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
-+ (NSArray *)findAllRemote;
++ (NSMutableArray *)findAllRemote;
 
 @end
 
@@ -167,7 +167,7 @@ NSArray *results = [json objectWithString:aJsonString error:&amp;error];
 <div class="slide"><h1 class="exercise">3. Add a Goal Finder Method</h1>
 <p class="first">Send a <span class="caps">GET</span> request, parse the <span class="caps">JSON</span> response, and create <code>Goal</code> objects:</p>
 <div class="code-small">
-<pre name="code" class="brush: ruby">+ (NSArray *)findAllRemote {
+<pre name="code" class="brush: ruby">+ (NSMutableArray *)findAllRemote {
     NSURL *url = [NSURL URLWithString:@"http://localhost:3000/goals.json"];
     
     NSError *error = nil;
@@ -184,7 +184,7 @@ NSArray *results = [json objectWithString:aJsonString error:&amp;error];
         [json release];
         
         for (NSDictionary *dictionary in results) {
-            Goal *goal = [[Goal alloc] initWithDictionary:dictionary];
+            Goal *goal = [[Goal alloc] initWithDictionary:[dictionary valueForKey:@"goal"]];
             [goals addObject:goal];
             [goal release];
         }
@@ -218,7 +218,7 @@ NSArray *results = [json objectWithString:aJsonString error:&amp;error];
 <div class="slide"><h1 class="exercise">5. Configure the Table Cells</h1>
 <p class="first">Change each row to contain the respective goal&#8217;s name and amount:</p>
 <div class="code-medium">
-<pre name="code" class="brush: ruby; highlight: [13,14,15,16]">    Goal *goal = [goals objectAtIndex:indexPath.row];
+<pre name="code" class="brush: ruby; highlight: [13,14,15,16]">    Goal *goal = [self.goals objectAtIndex:indexPath.row];
     
     cell.textLabel.text = goal.name;
     cell.detailTextLabel.text = goal.amount;
